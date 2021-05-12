@@ -1,23 +1,23 @@
 package controller;
 
-    import entity.Reader;
     import entity.Book;
-    import entity.Management;
+import entity.Management;
+import entity.Reader;
 
-    import java.io.BufferedWriter;
-    import java.io.FileWriter;
-    import java.io.IOException;
-    import java.io.PrintWriter;
-    import java.nio.charset.StandardCharsets;
-    import java.nio.file.Paths;
-    import java.util.ArrayList;
-    import java.util.Scanner;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class DataController {
-    private static FileWriter fileWriter;
-    private static BufferedWriter bufferedWriter;
-    private static PrintWriter printWriter;
-    private static Scanner scanner;
+    private FileWriter fileWriter;
+    private BufferedWriter bufferedWriter;
+    private PrintWriter printWriter;
+    private Scanner scanner;
 
     public DataController() {
     }
@@ -32,7 +32,7 @@ public class DataController {
         }
     }
 
-    public void openFileToRead (String fileName) {
+    public void openFileToRead(String fileName) {
         try {
             scanner = new Scanner(Paths.get(fileName),"UTF-8");
         } catch (IOException e) {
@@ -40,7 +40,7 @@ public class DataController {
         }
     }
 
-    public static void writeBookToFile(Book book, String fileName) {
+    public void writeBookToFile(Book book, String fileName) {
         openFileToWrite(fileName);
         printWriter.println(book.getBookId() + " | " + book.getBookName()
                 + " | " + book.getAuthor() + " | " + book.getSpecialization()
@@ -48,7 +48,7 @@ public class DataController {
         closeFileAfterWrite(fileName);
     }
 
-    public void writeReaderToFile (Reader reader, String fileName) {
+    public void writeReaderToFile(Reader reader, String fileName) {
         openFileToWrite(fileName);
         printWriter.println(reader.getReaderId() + " | " + reader.getFullName()
                 + " | " + reader.getAddress() + " | " + reader.getPhoneNumber());
@@ -76,7 +76,7 @@ public class DataController {
         return books;
     }
 
-    public ArrayList<Reader> readReadersFromFile (String fileName) {
+    public ArrayList<Reader> readReadersFromFile(String fileName) {
         openFileToRead(fileName);
         ArrayList<Reader> readers = new ArrayList<>();
         while (scanner.hasNext()) {
@@ -100,14 +100,14 @@ public class DataController {
         return managementList;
     }
 
-    private static Book createBookFromData(String data) {
-        String[] datas = data.split("\\| ");
+    private Book createBookFromData(String data) {
+        String[] datas = data.split("\\|");
         return new Book(Integer.parseInt(datas[0]), datas[1], datas[2], datas[3],
                             Integer.parseInt(datas[4]), Integer.parseInt(datas[5]));
     }
 
     public Reader createReaderFromData(String data) {
-        String[] datas = data.split("\\| ");
+        String[] datas = data.split("\\|");
         return new Reader(Integer.parseInt(datas[0]), datas[1], datas[2], datas[3]);
     }
 
@@ -118,7 +118,7 @@ public class DataController {
                 Integer.parseInt(datas[2]), datas[3]);
     }
 
-    public void closeFileAfterWrite (String fileName) {
+    public void closeFileAfterWrite(String fileName) {
         try {
             printWriter.close();
             bufferedWriter.close();
@@ -128,7 +128,7 @@ public class DataController {
         }
     }
 
-    public void closeFileAfterRead (String fileName) {
+    public void closeFileAfterRead(String fileName) {
         try {
             scanner.close();
         } catch (Exception e) {
